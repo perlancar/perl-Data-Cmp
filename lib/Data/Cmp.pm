@@ -334,4 +334,8 @@ each one then compare the serialized strings/bytes. There are many modules for
 serialization: L<JSON>, L<YAML>, L<Sereal>, L<Data::Dumper>, L<Storable>,
 L<Data::Dmp>, just to name a few.
 
+Test modules that do data structure comparison: L<Test::DataCmp> (test module
+based on Data::Cmp), L<Test::More> (C<is_deeply()>), L<Test::Deep>,
+L<Test2::Tools::Compare>.
+
 =cut
