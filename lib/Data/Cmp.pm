@@ -199,7 +199,7 @@ This module offers an alternative to L<Test::Deep> (specifically,
 L<Test::Deep::NoDeep>'s C<is_deeply()>). Test::Deep allows customizing
 comparison on specific points in a data structure, while Data::Cmp's
 C<cmp_data()> is more geared towards customizing comparison behavior across all
-points in a data structure. Depending your needs, one might be more convenient
+points in a data structure. Depending on your need, one might be more convenient
 than the other.
 
 For basic customization, you can turn on case-sensitive matching or numeric
