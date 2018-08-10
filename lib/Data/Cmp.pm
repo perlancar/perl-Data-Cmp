@@ -330,7 +330,7 @@ Modules that return some kind of "diff" data: L<Data::Comparator>,
 L<Data::Diff>.
 
 Of course, to check whether two structures are the same you can also serialize
-each one then compare serialized strings/bytes. There are many modules for
+each one then compare the serialized strings/bytes. There are many modules for
 serialization: L<JSON>, L<YAML>, L<Sereal>, L<Data::Dumper>, L<Storable>,
 L<Data::Dmp>, just to name a few.
 
