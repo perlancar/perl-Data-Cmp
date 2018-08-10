@@ -11,7 +11,7 @@ use Scalar::Util qw(looks_like_number blessed reftype refaddr);
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(cmp_data);
+our @EXPORT_OK = qw(cmp_data);
 
 # for when dealing with circular refs
 our %_seen_refaddrs;
