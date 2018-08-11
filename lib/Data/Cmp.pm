@@ -185,6 +185,13 @@ sub cmp_data {
  cmp_data(["one" , "two", "three"],
           ["satu", "dua", "tiga" ], {elem_cmp=>sub { length $_[0] <=> length $_[1] }}); # => -1
 
+Sort data structures (of similar structures):
+
+ use Data::Cmp qw(cmp_data);
+ use Data::Dump;
+ my @arrays = ([3], [1], [-1, 2], [0,0], [1,2]);
+ dd sort { cmp_data($a, $b) } @arrays;
+
 
 =head1 DESCRIPTION
 
@@ -217,9 +224,12 @@ Usage:
 
 Compare two data structures C<$d1> and C<$d2> recursively. Like the C<cmp>
 operator, will return either: 0 if the two structures are equivalent, -1 if
-C<$d1> is "less than" C<$d2>, 1 if C<$d1> is "greater than" C<$d2>. Unlike the
-C<cmp> operator, can also return 2 if C<$d1> and C<$d2> differ but there is no
-sensible notion of which one is "greater than" the other.
+C<$d1> is "less than" C<$d2>, 1 if C<$d1> is "greater than" C<$d2>. Because of
+this, C<cmp_data()> can be used with C<sort()> to order references of similar
+structures.
+
+Unlike the C<cmp> operator, can also return 2 if C<$d1> and C<$d2> differ but
+there is no sensible notion of which one is "greater than" the other.
 
 Can detect recursive references.
 
