@@ -89,11 +89,13 @@ sub _cmp_data {
         $_seen_refaddrs{$refaddr1}++;
         $_seen_refaddrs{$refaddr2}++;
         local $ctx->{depth} = $ctx->{depth} + 1;
+        local $ctx->{path} = [@{ $ctx->{path} }, undef];
         local $ctx->{index} = -1;
       ELEM:
         for my $i (0..$#{$d1}) {
             if ($i > $#{$d2}) { return 1 }
             $ctx->{index} = $i;
+            $ctx->{path}[-1] = "[$i]";
             if ($opts->{elem_cmp}) {
                 my $cmpres = $opts->{elem_cmp}->($d1->[$i], $d2->[$i], $ctx);
                 if (defined $cmpres) {
@@ -110,6 +112,7 @@ sub _cmp_data {
         $_seen_refaddrs{$refaddr1}++;
         $_seen_refaddrs{$refaddr2}++;
         local $ctx->{depth} = $ctx->{depth} + 1;
+        local $ctx->{path} = [@{ $ctx->{path} }, undef];
         local $ctx->{key} = undef;
         my $nkeys1 = keys %$d1;
         my $nkeys2 = keys %$d2;
@@ -117,6 +120,7 @@ sub _cmp_data {
         for my $k (sort keys %$d1) {
             unless (exists $d2->{$k}) { return $nkeys1 <=> $nkeys2 || 2 }
             $ctx->{key} = $k;
+            $ctx->{path}[-1] = "{$k}";
             if ($opts->{elem_cmp}) {
                 my $cmpres = $opts->{elem_cmp}->($d1->{$k}, $d2->{$k}, $ctx);
                 if (defined $cmpres) {
@@ -138,7 +142,7 @@ sub cmp_data {
     $opts //= {};
 
     local %_seen_refaddrs = ();
-    my $ctx = {depth => 0};
+    my $ctx = {depth => 0, path => []};
     _cmp_data($d1, $d2, $opts, $ctx);
 }
 
@@ -327,7 +331,10 @@ array, before diving down to their items) and given these arguments:
  ($item1, $item2, \%context)
 
 Context contains these keys: C<depth> (int, starting from 0 from the topmost
-level).
+level), C<index> (current array index, set if inside an array), C<key> (current
+hash key, if inside a hash), C<path> (array, containing array indexes in the
+format of "[I<i>]" or hash keys in the format of "{I<key>}" to point to the
+"address" of the data item in the data structure).
 
 Must return 0, -1, 1, or 2. You can also return undef if you want to decline
 doing comparison. In that case, C<cmp_data()> will use its default comparison
