@@ -244,6 +244,12 @@ C<looks_like_number>.
 
  cmp_data("a", "2b"); # 1
 
+=item * Two references are different when they are of different type (e.g. HASH and ARRAY)
+
+=item * Two references are different when one is blessed and the other is not
+
+=item * Two blessed references are different when the package they are blessed into are different
+
 =item * Two arrays will be compared element by element
 
 If all elements are the same until the last element of the shorter array, the
