@@ -229,6 +229,8 @@ Default behavior when comparing different types of data:
 
 =item * Two undef values are the same (0)
 
+ cmp_data(undef, undef); # 0
+
 =item * Defined value is greater than undefined value
 
  cmp_data(undef, 0); # -1
@@ -244,11 +246,22 @@ C<looks_like_number>.
 
  cmp_data("a", "2b"); # 1
 
+=item * A reference is different from a non-reference value
+
+ cmp_data(1, \1); # 2
+
 =item * Two references are different when they are of different type (e.g. HASH and ARRAY)
+
+ cmp_data([], {}); # 2
 
 =item * Two references are different when one is blessed and the other is not
 
-=item * Two blessed references are different when the package they are blessed into are different
+ cmp_data([], blessed([], "foo")); # 2
+
+=item * Two blessed references are different when the packages they are blessed into are different
+
+ cmp_data(bless([], "foo"), bless([], "bar")); # 2
+ cmp_data(bless([], "foo"), bless([], "foo")); # 0
 
 =item * Two arrays will be compared element by element
 
@@ -275,7 +288,10 @@ same.
 
  cmp_data({a=>1, b=>2}, {a=>1, c=>1, d=>1}); # -1
 
-=item * All other combination will result in either 0 (same) or 2 (different)
+=item * Non-hash and non-array references are the same only if they have the same address
+
+ cmp_data(\1, \1); # 2
+ my $ref = \1; cmp_data($ref, $ref); # 0
 
 =back
 
