@@ -17,9 +17,8 @@ our @EXPORT_OK = qw(cmp_data);
 our %_seen_refaddrs;
 
 sub _cmp_data {
-    my ($d1, $d2) = @_;
-
-    my $cmpres;
+    my $d1 = shift;
+    my $d2 = shift;
 
     my $def1 = defined $d1;
     my $def2 = defined $d2;
