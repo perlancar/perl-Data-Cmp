@@ -13,11 +13,17 @@ subtest undef => sub {
     is(cmp_data(0, undef), 1);
 };
 
-subtest scalar => sub {
+subtest str => sub {
     is(cmp_data("", ""), 0);
     is(cmp_data("abc", "abc"), 0);
     is(cmp_data("abc", "ab"), 1);
     is(cmp_data("Abc", "abc"), -1);
+    is(cmp_data(["Abc"], ["abc"]), -1);
+};
+
+subtest num => sub {
+    is(cmp_data(10, 9), -1);
+    is(cmp_data([10], [9]), -1);
 };
 
 subtest ref => sub {

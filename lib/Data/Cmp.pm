@@ -193,10 +193,10 @@ Usage:
 
 =head1 SEE ALSO
 
-Other variants of Data::Cmp: L<Data::Cmp::Custom> (allows custom actions and
-comparison routines), L<Data::Cmp::Diff> (generates diff structure instead of
-just returning -1/0/1/2), L<Data::Cmp::Diff::Perl> (generates diff in the form
-of Perl code).
+Other variants of Data::Cmp: L<Data::Cmp::Numeric>, L<Data::Cmp::StrOrNumeric>,
+L<Data::Cmp::Custom> (allows custom actions and comparison routines),
+L<Data::Cmp::Diff> (generates diff structure instead of just returning
+-1/0/1/2), L<Data::Cmp::Diff::Perl> (generates diff in the form of Perl code).
 
 Modules that just return boolean result ("same or different"): L<Data::Compare>,
 L<Test::Deep::NoTest> (offers flexibility or approximate or custom comparison).
