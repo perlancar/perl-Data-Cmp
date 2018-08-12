@@ -112,10 +112,8 @@ sub cmp_data {
 
 Sort data structures (of similar structures):
 
- use Data::Cmp qw(cmp_data);
- use Data::Dump;
- my @arrays = ([3], [1], [-1, 2], [0,0], [1,2]);
- dd sort { cmp_data($a, $b) } @arrays;
+ my @arrays = (["c"], ["b"], ["a", "b"], ["a"], ["a","c"]);
+ my @sorted = sort { cmp_data($a, $b) } @arrays; # => (["a"], ["a","b"], ["a","c"], ["b"], ["c"])
 
 
 =head1 DESCRIPTION
