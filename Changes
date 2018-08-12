@@ -1,3 +1,10 @@
+0.003    2018-08-11 (PERLANCAR)
+
+         - No functional changes.
+
+         - [doc] Some wording and formatting fixes, example tweak.
+
+
 0.002    2018-08-11 (PERLANCAR)
 
          - [REMOVED] Remove all options and make Data::Cmp minimalist. Separate
