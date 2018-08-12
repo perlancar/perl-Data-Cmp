@@ -7,7 +7,7 @@ use 5.010001;
 use strict;
 use warnings;
 
-use Scalar::Util qw(looks_like_number blessed reftype refaddr);
+use Scalar::Util qw(blessed reftype refaddr);
 
 require Exporter;
 our @ISA = qw(Exporter);
