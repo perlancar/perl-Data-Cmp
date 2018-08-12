@@ -143,11 +143,11 @@ The following are the rules of comparison used by C<cmp_data()>:
 
 =item * Blessed references that are blessed into different packages are different (2)
 
-=item * Array references are compared element by element
+=item * Two array(-reference)s are compared element by element
 
 =item * A longer array is greater than (1) its shorter subset
 
-=item * Hash references are compared key by key
+=item * Two hash(-referenc)es are compared key by key
 
 =item * When two hash references share a common subset of pairs, the greater is the one that has more non-common pairs
 
