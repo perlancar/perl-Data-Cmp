@@ -129,25 +129,47 @@ The following are the rules of comparison used by C<cmp_data()>:
 
 =over
 
-=item * Two undefs are the same (0)
+=item * Two undefs are the same
 
-=item * A defined value is greater than (1) undef
+=item * A defined value is greater than undef
 
 =item * Two non-reference scalars are compared string-wise using Perl's cmp
 
-=item * A reference and non-reference are different (2)
+=item * A reference and non-reference are different
 
-=item * Two references that are of different types are different (2)
+ cmp_data([], 0); # 2
 
-=item * Blessed references that are blessed into different packages are different (2)
+=item * Two references that are of different types are different
 
-=item * Two array(-reference)s are compared element by element
+ cmp_data([], {}); # 2
 
-=item * A longer array is greater than (1) its shorter subset
+=item * Blessed references that are blessed into different packages are different
 
-=item * Two hash(-referenc)es are compared key by key
+ cmp_data(bless([], "foo"), bless([], "bar")); # 2
+ cmp_data(bless([], "foo"), bless([], "foo")); # 0
 
-=item * When two hash references share a common subset of pairs, the greater is the one that has more non-common pairs
+=item * Two array references are compared element by element
+
+ cmp_data(["a","b","c"], ["a","b","c"]); #  0
+ cmp_data(["a","b","c"], ["a","b","d"]); # -1
+ cmp_data(["a","d","c"], ["a","b","e"]); #  1
+
+=item * A longer arrayref is greater than its shorter subset
+
+ cmp_data(["a","b"], ["a"]); # 1
+
+=item * Two hash references are compared key by key
+
+ cmp_data({k1=>"a", k2=>"b", k3=>"c"}, {k1=>"a", k2=>"b", k3=>"d"}); # 0
+ cmp_data({k1=>"a", k2=>"b", k3=>"c"}, {k1=>"a", k2=>"b", k3=>"c"}); # 1
+
+=item * When two hash references share a common subset of pairs but have non-common pairs, the greater hashref is the one that has more non-common pairs
+
+If the number of non-common pairs are the same, they are just different.
+
+ cmp_data({k1=>"", k2=>"", k3=>""}, {k1=>"", k5=>""});                #  1
+ cmp_data({k1=>"", k2=>"", k3=>""}, {k1=>"", k5=>"", k6=>"});         #  2
+ cmp_data({k1=>"", k2=>"", k3=>""}, {k1=>"", k5=>"", k6=>", k7=>""}); # -1
 
 =back
 
