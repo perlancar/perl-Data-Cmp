@@ -59,13 +59,11 @@ sub _cmp_data {
         $_seen_refaddrs{$refaddr1}++;
         $_seen_refaddrs{$refaddr2}++;
       ELEM:
-        for my $i (0..$#{$d1}) {
-            if ($i > $#{$d2}) { return 1 }
+        for my $i (0..($#{$d1} < $#{$d2} ? $#{$d1} : $#{$d2})) {
             my $cmpres = _cmp_data($d1->[$i], $d2->[$i]);
             return $cmpres if $cmpres;
         }
-        if (@$d2 > @$d1) { return -1 }
-        return 0;
+        return $#{$d1} <=> $#{$d2};
     } elsif ($reftype1 eq 'HASH' && !$_seen_refaddrs{$refaddr1} && !$_seen_refaddrs{$refaddr2}) {
         $_seen_refaddrs{$refaddr1}++;
         $_seen_refaddrs{$refaddr2}++;
