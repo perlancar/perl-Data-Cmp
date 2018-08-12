@@ -123,7 +123,7 @@ Sort data structures (of similar structures):
 This relatively compact module offers the C<cmp_data> function that, like Perl's
 C<cmp>, returns -1/0/1 value. In addition to that, it can also return 2 if the
 two data structures differ but there is no sensible notion of which one is
-larger than the other.
+"greater than" the other.
 
 This module can handle circular structure.
 
@@ -165,9 +165,9 @@ Usage:
 
 =head1 SEE ALSO
 
-Other variants of Data::Cmp: C<Data::Cmp::Custom> (allows custom actions and
-comparison routines), C<Data::Cmp::Diff> (generates diff structure instead of
-just returning -1/0/1/2), C<Data::Cmp::Diff::Perl> (generates diff in the form
+Other variants of Data::Cmp: L<Data::Cmp::Custom> (allows custom actions and
+comparison routines), L<Data::Cmp::Diff> (generates diff structure instead of
+just returning -1/0/1/2), L<Data::Cmp::Diff::Perl> (generates diff in the form
 of Perl code).
 
 Modules that just return boolean result ("same or different"): L<Data::Compare>,
