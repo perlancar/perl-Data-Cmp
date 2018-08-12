@@ -131,9 +131,16 @@ The following are the rules of comparison used by C<cmp_data()>:
 
 =item * Two undefs are the same
 
+ cmp_data(undef, undef); # 0
+
 =item * A defined value is greater than undef
 
+ cmp_data(undef, 0); # -1
+
 =item * Two non-reference scalars are compared string-wise using Perl's cmp
+
+ cmp_data("a", "A"); # 1
+ cmp_data(10, 9);    # -1
 
 =item * A reference and non-reference are different
 
