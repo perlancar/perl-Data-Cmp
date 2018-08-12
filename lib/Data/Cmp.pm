@@ -14,7 +14,7 @@ our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(cmp_data);
 
 # for when dealing with circular refs
-our %_seen_refaddrs;
+my %_seen_refaddrs;
 
 sub _cmp_data {
     my $d1 = shift;
@@ -22,18 +22,19 @@ sub _cmp_data {
 
     my $def1 = defined $d1;
     my $def2 = defined $d2;
-    if    ( $def1 && !$def2) { return 1 }
-    elsif (!$def1 &&  $def2) { return -1 }
-    elsif (!$def1 && !$def2) { return 0 }
+    if ($def1) {
+        return 1 if !$def2;
+    } else {
+        return $def2 ? -1 : 0;
+    }
 
     # both are defined
 
     my $reftype1 = reftype($d1);
     my $reftype2 = reftype($d2);
-    if    ( $reftype1 xor $reftype2) { return 2 }
-    elsif (!$reftype1 && !$reftype2) {
+    if (!$reftype1 && !$reftype2) {
         return $d1 cmp $d2;
-    }
+    } elsif ( $reftype1 xor $reftype2) { return 2 }
 
     # both are refs
 
@@ -83,9 +84,10 @@ sub _cmp_data {
 }
 
 sub cmp_data {
-    my ($d1, $d2) = @_;
+    my $d1 = shift;
+    my $d2 = shift;
 
-    local %_seen_refaddrs = ();
+    %_seen_refaddrs = ();
     _cmp_data($d1, $d2);
 }
 
