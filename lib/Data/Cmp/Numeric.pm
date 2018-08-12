@@ -13,6 +13,8 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(cmp_data);
 
+our $EPSILON;
+
 # for when dealing with circular refs
 my %_seen_refaddrs;
 
@@ -33,7 +35,11 @@ sub _cmp_data {
     my $reftype1 = reftype($d1);
     my $reftype2 = reftype($d2);
     if (!$reftype1 && !$reftype2) {
-        return $d1 <=> $d2;
+        if (defined $EPSILON && abs($d1 - $d2) < $EPSILON) {
+            return 0;
+        } else {
+            return $d1 <=> $d2;
+        }
     } elsif ( $reftype1 xor $reftype2) { return 2 }
 
     # both are refs
@@ -96,12 +102,23 @@ sub cmp_data {
 
 =head1 SYNOPSIS
 
- use Data::Cmp ();
- use Data::Cmp::Numeric ();
+ use Data::Cmp::Numeric qw(cmp_data);
 
+ cmp_data([0, 1, 10], [0, 1, 9]);                       # =>  1
+
+Contrasted with L<Data::Cmp>:
+
+ use Data::Cmp ();
  Data::Cmp::cmp_data([0, 1, 10], [0, 1, 9]);            # => -1
 
- Data::Cmp::Numeric::cmp_data([0, 1, 10], [0, 1, 9]);            # => 1
+Perform numeric comparison with some tolerance:
+
+ {
+     local $Data::Cmp::Numeric::EPSILON = 1e-3;
+     cmp_data(1, 1.1   );     # -1
+     cmp_data(1, 1.0001);     #  0
+     cmp_data([1], [1.0001]); #  0
+ }
 
 
 =head1 DESCRIPTION
@@ -117,6 +134,14 @@ Usage:
 
 This module's C<cmp_data()> is just like L<Data::Cmp>'s except that two defined
 non-reference values are compared using Perl's C<< <=> >> instead of C<cmp>.
+
+
+=head1 VARIABLES
+
+=head2 $EPSILON
+
+Can be set to perform numeric comparison with some tolerance. See example in
+Synopsis.
 
 
 =head1 SEE ALSO
