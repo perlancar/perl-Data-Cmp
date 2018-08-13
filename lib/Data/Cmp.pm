@@ -117,10 +117,10 @@ Sort data structures (of similar structures):
 
 =head1 DESCRIPTION
 
-This relatively compact module offers the C<cmp_data> function that, like Perl's
-C<cmp>, returns -1/0/1 value. In addition to that, it can also return 2 if the
-two data structures differ but there is no sensible notion of which one is
-"greater than" the other.
+This relatively lightweight (no non-core dependencies, under 100 lines of code)
+module offers the C<cmp_data> function that, like Perl's C<cmp>, returns -1/0/1
+value. In addition to that, it can also return 2 if the two data structures
+differ but there is no sensible notion of which one is "greater than" the other.
 
 This module can handle circular structure.
 
