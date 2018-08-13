@@ -50,6 +50,7 @@ subtest hash => sub {
     is(cmp_data({a=>1}, {a=>1}), 0);
     is(cmp_data({a=>1}, {a=>1, b=>2}), -1);
     is(cmp_data({a=>1, c=>3, d=>4}, {a=>1, b=>2}), 1);
+    is(cmp_data({a=>1, c=>3}, {a=>1, b=>2}), 2);
     is(cmp_data({a=>1}, {a=>0, b=>2}), 1);
     is(cmp_data({a=>1}, {b=>1}), 2);
 };

@@ -75,7 +75,7 @@ sub _cmp_data {
             my $cmpres = _cmp_data($d1->{$k}, $d2->{$k});
             return $cmpres if $cmpres;
         }
-        return $nkeys1 <=> $nkeys2;
+        return $nkeys1 <=> $nkeys2 || 2;
     } else {
         return $refaddr1 == $refaddr2 ? 0 : 2;
     }
