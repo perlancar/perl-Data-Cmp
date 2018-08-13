@@ -154,7 +154,7 @@ The following are the rules of comparison used by C<cmp_data()>:
  cmp_data(bless([], "foo"), bless([], "bar")); # 2
  cmp_data(bless([], "foo"), bless([], "foo")); # 0
 
-=item * Two array references are compared element by element
+=item * Two array references are compared element by element (unless an array has been seen, see last rule)
 
  cmp_data(["a","b","c"], ["a","b","c"]); #  0
  cmp_data(["a","b","c"], ["a","b","d"]); # -1
@@ -164,7 +164,7 @@ The following are the rules of comparison used by C<cmp_data()>:
 
  cmp_data(["a","b"], ["a"]); # 1
 
-=item * Two hash references are compared key by key
+=item * Two hash references are compared key by key (unless an array has been seen, see last rule)
 
  cmp_data({k1=>"a", k2=>"b", k3=>"c"}, {k1=>"a", k2=>"b", k3=>"d"}); # 0
  cmp_data({k1=>"a", k2=>"b", k3=>"c"}, {k1=>"a", k2=>"b", k3=>"c"}); # 1
@@ -176,6 +176,19 @@ If the number of non-common pairs are the same, they are just different.
  cmp_data({k1=>"", k2=>"", k3=>""}, {k1=>"", k5=>""});                #  1
  cmp_data({k1=>"", k2=>"", k3=>""}, {k1=>"", k5=>"", k6=>"});         #  2
  cmp_data({k1=>"", k2=>"", k3=>""}, {k1=>"", k5=>"", k6=>", k7=>""}); # -1
+
+=item * All other types of references (i.e. non-hash, non-array) are the same only if their address is
+
+ cmp_data(\1, \1); # 2
+ my $ref = \1; cmp_data($ref, $ref); # 0
+
+=item * A seen (hash or array) reference is no longer recursed, it's compared by address (see previous rule)
+
+ my $ary1 = [1]; push @$ary1, $ary1;
+ my $ary2 = [1]; push @$ary2, $ary2;
+ my $ary3 = [1]; push @$ary3, $ary1;
+ cmp_data($ary1, $ary2); # 1
+ cmp_data($ary1, $ary3); # 0
 
 =back
 
