@@ -204,6 +204,8 @@ Usage:
 
 =head1 SEE ALSO
 
+=head2 Data comparison
+
 Other variants of Data::Cmp: L<Data::Cmp::Numeric>, L<Data::Cmp::StrOrNumeric>,
 L<Data::Cmp::Custom> (allows custom actions and comparison routines),
 L<Data::Cmp::Diff> (generates diff structure instead of just returning
@@ -223,5 +225,10 @@ L<Data::Dmp>, just to name a few.
 Test modules that do data structure comparison: L<Test::DataCmp> (test module
 based on Data::Cmp::Custom), L<Test::More> (C<is_deeply()>), L<Test::Deep>,
 L<Test2::Tools::Compare>.
+
+=head2 Others
+
+L<Scalar::Cmp> which employs roughly the same rules as Data::Cmp but does not
+recurse into arrays/hashes and is meant to compare two scalar values.
 
 =cut
