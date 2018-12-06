@@ -30,7 +30,7 @@ sub _cmp_data {
         return $def2 ? -1 : 0;
     }
 
-    # both are defined
+    # so both are defined ...
 
     my $reftype1 = reftype($d1);
     my $reftype2 = reftype($d2);
@@ -42,11 +42,11 @@ sub _cmp_data {
         }
     } elsif ( $reftype1 xor $reftype2) { return 2 }
 
-    # both are refs
+    # so both are refs ...
 
     return 2 if $reftype1 ne $reftype2;
 
-    # both are refs of the same type
+    # so both are refs of the same type ...
 
     my $pkg1 = blessed($d1);
     my $pkg2 = blessed($d2);
@@ -56,7 +56,7 @@ sub _cmp_data {
         return 2 if defined $pkg2;
     }
 
-    # both are non-objects or objects of the same class
+    # so both are non-objects or objects of the same class ...
 
     my $refaddr1 = refaddr($d1);
     my $refaddr2 = refaddr($d2);
