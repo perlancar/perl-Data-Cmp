@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Test::More 0.98;
 
-use Data::Cmp qw(cmp_data);
+use Data::Cmp::StrOrNumeric qw(cmp_data);
 
 subtest undef => sub {
     is(cmp_data(undef, undef), 0);
@@ -22,8 +22,8 @@ subtest str => sub {
 };
 
 subtest num => sub {
-    is(cmp_data(10, 9), -1);
-    is(cmp_data([10], [9]), -1);
+    is(cmp_data(10, 9), 1);
+    is(cmp_data([10], [9]), 1);
 };
 
 subtest str_vs_num => sub {
