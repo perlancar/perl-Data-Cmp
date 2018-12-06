@@ -72,7 +72,6 @@ sub _cmp_data {
         $_seen_refaddrs{$refaddr2}++;
       ELEM:
         for my $i (0..($#{$d1} < $#{$d2} ? $#{$d1} : $#{$d2})) {
-            if ($i > $#{$d2}) { return 1 }
             my $cmpres = _cmp_data($d1->[$i], $d2->[$i]);
             return $cmpres if $cmpres;
         }
