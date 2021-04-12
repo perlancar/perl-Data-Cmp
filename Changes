@@ -1,3 +1,11 @@
+0.008   2021-04-12  Released-By: PERLANCAR; Urgency: low
+
+        - No functional changes.
+
+	- [doc] Make it clearer in the summaries & examples when two items
+	  are different and not comparable (returns 2).
+
+
 0.007   2019-11-18  Released-By: PERLANCAR; Urgency: low
 
 	- No functional changes.
