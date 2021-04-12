@@ -1,6 +1,8 @@
 package Data::Cmp;
 
+# AUTHORITY
 # DATE
+# DIST
 # VERSION
 
 use 5.010001;
@@ -120,7 +122,8 @@ Sort data structures (of similar structures):
 This relatively lightweight (no non-core dependencies, under 100 lines of code)
 module offers the C<cmp_data> function that, like Perl's C<cmp>, returns -1/0/1
 value. In addition to that, it can also return 2 if the two data structures
-differ but there is no sensible notion of which one is "greater than" the other.
+differ but no comparable: there is no sensible notion of which one is "greater
+than" the other.
 
 This module can handle circular structure.
 
@@ -141,15 +144,15 @@ The following are the rules of comparison used by C<cmp_data()>:
  cmp_data("a", "A"); # 1
  cmp_data(10, 9);    # -1
 
-=item * A reference and non-reference are different
+=item * A reference and non-reference are different and not comparable
 
  cmp_data([], 0); # 2
 
-=item * Two references that are of different types are different
+=item * Two references that are of different types are different and not comparable
 
  cmp_data([], {}); # 2
 
-=item * Blessed references that are blessed into different packages are different
+=item * Blessed references that are blessed into different packages are different and not comparable
 
  cmp_data(bless([], "foo"), bless([], "bar")); # 2
  cmp_data(bless([], "foo"), bless([], "foo")); # 0
@@ -171,13 +174,14 @@ The following are the rules of comparison used by C<cmp_data()>:
 
 =item * When two hash references share a common subset of pairs but have non-common pairs, the greater hashref is the one that has more non-common pairs
 
-If the number of non-common pairs are the same, they are just different.
+If the number of non-common pairs are the same, they are just different and not
+comparable:
 
- cmp_data({k1=>"", k2=>"", k3=>""}, {k1=>"", k5=>""});                #  1
- cmp_data({k1=>"", k2=>"", k3=>""}, {k1=>"", k5=>"", k6=>"});         #  2
- cmp_data({k1=>"", k2=>"", k3=>""}, {k1=>"", k5=>"", k6=>", k7=>""}); # -1
+ cmp_data({k1=>"", k2=>"", k3=>""}, {k1=>"", k5=>""});                #  1 (hash1 has 2 non-common keys: k2 & k3; hash2 only has 1: k5)
+ cmp_data({k1=>"", k2=>"", k3=>""}, {k1=>"", k5=>"", k6=>", k7=>""}); # -1 (hash1 has 2 non-common keys: k2 & k3; hash2 has 3 non-common pairs: k5, k6, k7)
+ cmp_data({k1=>"", k2=>"", k3=>""}, {k1=>"", k5=>"", k6=>"});         #  2 (both hashes have 2 non-common pairs)
 
-=item * All other types of references (i.e. non-hash, non-array) are the same only if their address is the same
+=item * All other types of references (i.e. non-hash, non-array) are the same only if their address is the same; otherwise they are different and not comparable
 
  cmp_data(\1, \1); # 2
  my $ref = \1; cmp_data($ref, $ref); # 0
