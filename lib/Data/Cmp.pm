@@ -124,8 +124,8 @@ module offers the C<cmp_data> function that, like Perl's C<cmp>, returns -1/0/1
 value. C<cmp_data> differs from C<cmp> in that it can compare two data of
 different types and compare data items recursively, with pretty sensible
 semantics. In addition to returning -1/0/1, C<cmp_data> can also return 2 if two
-data differ but not comparable when there is no sensible notion of which one is
-"greater than" the other, for example empty hash C<{}> vs empty array C<[]>).
+data differ but not comparable: there is no sensible notion of which one is
+"greater than" the other. An example is empty hash C<{}> vs empty array C<[]>).
 
 This module can handle circular structure.
 
